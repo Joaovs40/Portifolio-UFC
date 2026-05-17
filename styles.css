@@ -341,43 +341,114 @@ section { padding: 120px 60px; position: relative; }
 .sobre-text p em { color: var(--red); font-style: normal; }
 
 .sobre-skills {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
 }
-.skill-item { display: flex; flex-direction: column; gap: 8px; }
-.skill-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+
+.expertise-card {
+  padding: 32px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
-.skill-name {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.75rem;
+
+.expertise-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--red), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.expertise-card:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(232,0,29,0.3);
+}
+
+.expertise-card:hover::before {
+  transform: scaleX(1);
+}
+
+.expertise-hard {
+  border-left: 2px solid var(--red);
+}
+
+.expertise-soft {
+  border-left: 2px solid var(--gold);
+}
+
+.expertise-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(232,0,29,0.2);
+}
+
+.expertise-icon {
+  font-size: 1.8rem;
+}
+
+.expertise-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
   letter-spacing: 2px;
   color: var(--white);
   text-transform: uppercase;
+  margin: 0;
 }
-.skill-pct {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.2rem;
-  color: var(--red);
+
+.expertise-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-.skill-bar {
-  height: 3px;
-  background: rgba(255,255,255,0.08);
+
+.expertise-list li {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #aaa;
+  padding-left: 24px;
   position: relative;
-  overflow: hidden;
 }
-.skill-fill {
+
+.expertise-list li::before {
+  content: '';
   position: absolute;
-  top: 0; left: 0;
-  height: 100%;
-  background: linear-gradient(to right, var(--red), var(--gold));
-  width: 0%;
-  transition: width 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 8px rgba(232,0,29,0.5);
 }
-.skill-fill.animated { width: var(--w); }
+
+.expertise-soft .expertise-list li::before {
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(255,208,0,0.5);
+}
+
+@media (max-width: 768px) {
+  .sobre-skills {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
 
 /* EXPERIÊNCIA */
 #experiencia { border-top: 1px solid var(--border); }

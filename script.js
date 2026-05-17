@@ -42,22 +42,11 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
-      // Animate skill bars
-      e.target.querySelectorAll('.skill-fill').forEach(bar => bar.classList.add('animated'));
     }
   });
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// Also observe skill fills directly
-const skillObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('animated');
-  });
-}, { threshold: 0.3 });
-
-document.querySelectorAll('.skill-fill').forEach(el => skillObserver.observe(el));
 
 // ACTIVE NAV
 const sections = document.querySelectorAll('section[id]');
