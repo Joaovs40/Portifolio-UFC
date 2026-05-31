@@ -72,8 +72,9 @@ function initMatrix() {
     drops.forEach((y, i) => {
       const ch = chars[Math.floor(Math.random() * chars.length)];
       const bright = Math.random() > 0.95;
-      ctx.fillStyle = bright ? '#ffffff' : '#E8001D';
-      ctx.globalAlpha = bright ? 0.9 : 0.4;
+      const colors = ['#9B4DFF','#FF2D78','#C084FC'];
+      ctx.fillStyle = bright ? '#ffffff' : colors[Math.floor(Math.random() * colors.length)];
+      ctx.globalAlpha = bright ? 0.9 : 0.35;
       ctx.fillText(ch, i * 18, y * 18);
       ctx.globalAlpha = 1;
       if (y * 18 > H && Math.random() > 0.975) drops[i] = 0;
@@ -235,7 +236,9 @@ function drawTrail() {
     if (p.life <= 0) { particles.splice(i, 1); continue; }
     tCtx.beginPath();
     tCtx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-    tCtx.fillStyle = `rgba(232,0,29,${p.life * 0.6})`;
+    const trailColors = ['155,77,255','255,45,120','192,132,252'];
+    const tc = trailColors[Math.floor(Math.random() * trailColors.length)];
+    tCtx.fillStyle = `rgba(${tc},${p.life * 0.55})`;
     tCtx.fill();
   }
   requestAnimationFrame(drawTrail);
