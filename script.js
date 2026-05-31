@@ -71,10 +71,10 @@ function initMatrix() {
 
     drops.forEach((y, i) => {
       const ch = chars[Math.floor(Math.random() * chars.length)];
-      const bright = Math.random() > 0.95;
-      const colors = ['#9B4DFF','#FF2D78','#C084FC'];
-      ctx.fillStyle = bright ? '#ffffff' : colors[Math.floor(Math.random() * colors.length)];
-      ctx.globalAlpha = bright ? 0.9 : 0.35;
+      const bright = Math.random() > 0.97;
+      const colors = ['#716C59','#AEA897','#6F5F48'];
+      ctx.fillStyle = bright ? '#C8C5BE' : colors[Math.floor(Math.random() * colors.length)];
+      ctx.globalAlpha = bright ? 0.7 : 0.3;
       ctx.fillText(ch, i * 18, y * 18);
       ctx.globalAlpha = 1;
       if (y * 18 > H && Math.random() > 0.975) drops[i] = 0;
@@ -236,9 +236,9 @@ function drawTrail() {
     if (p.life <= 0) { particles.splice(i, 1); continue; }
     tCtx.beginPath();
     tCtx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-    const trailColors = ['155,77,255','255,45,120','192,132,252'];
+    const trailColors = ['174,168,151','113,108,89','111,95,72'];
     const tc = trailColors[Math.floor(Math.random() * trailColors.length)];
-    tCtx.fillStyle = `rgba(${tc},${p.life * 0.55})`;
+    tCtx.fillStyle = `rgba(${tc},${p.life * 0.5})`;
     tCtx.fill();
   }
   requestAnimationFrame(drawTrail);
