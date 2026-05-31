@@ -1,18 +1,17 @@
 // ─── BOOT SCREEN ───
-const bootLines = document.getElementById('bootLines');
-const bootBar   = document.getElementById('bootBar');
+const bootLines  = document.getElementById('bootLines');
+const bootBar    = document.getElementById('bootBar');
 const bootStatus = document.getElementById('bootStatus');
 const bootScreen = document.getElementById('boot-screen');
 
 const bootMessages = [
-  { text: '[ OK ] Carregando kernel jsales-os v2.0...', cls: 'ok', delay: 0 },
-  { text: '[ OK ] Módulo CSS3 inicializado', cls: 'ok', delay: 200 },
-  { text: '[ OK ] Motor JavaScript ativo', cls: 'ok', delay: 380 },
-  { text: '[ WARN ] Nível de café: crítico', cls: 'warn', delay: 520 },
-  { text: '[ OK ] Conectando ao GitHub...', cls: 'ok', delay: 680 },
-  { text: '[ OK ] Projetos carregados: 3', cls: 'ok', delay: 840 },
-  { text: '[ OK ] Matrix rain ativado', cls: 'ok', delay: 980 },
-  { text: '[ OK ] Sistema pronto. Bem-vindo.', cls: 'ok', delay: 1100 },
+  { text: '[ OK ] Sistema jsales-os v2.0 iniciando...', cls: 'ok',   delay: 0 },
+  { text: '[ OK ] Módulo CSS carregado',                cls: 'ok',   delay: 180 },
+  { text: '[ OK ] JavaScript engine ativo',             cls: 'ok',   delay: 340 },
+  { text: '[ WARN ] Nível de café: crítico',            cls: 'warn', delay: 480 },
+  { text: '[ OK ] Projetos carregados: 3',              cls: 'ok',   delay: 620 },
+  { text: '[ OK ] Terminal interativo pronto',          cls: 'ok',   delay: 780 },
+  { text: '[ OK ] Sistema pronto.',                     cls: 'ok',   delay: 940 },
 ];
 
 let pct = 0;
@@ -20,7 +19,7 @@ const barInterval = setInterval(() => {
   pct = Math.min(pct + 2, 100);
   bootBar.style.width = pct + '%';
   if (pct >= 100) clearInterval(barInterval);
-}, 18);
+}, 16);
 
 bootMessages.forEach(({ text, cls, delay }) => {
   setTimeout(() => {
@@ -32,64 +31,54 @@ bootMessages.forEach(({ text, cls, delay }) => {
 });
 
 setTimeout(() => {
-  bootStatus.textContent = 'Sistema pronto.';
+  bootStatus.textContent = 'Pronto.';
   setTimeout(() => {
     bootScreen.classList.add('hidden');
-    setTimeout(() => { bootScreen.style.display = 'none'; startHero(); }, 600);
-  }, 300);
-}, 1600);
+    setTimeout(() => {
+      bootScreen.style.display = 'none';
+      initMatrix();
+      initTyping();
+      initCounters();
+    }, 700);
+  }, 200);
+}, 1400);
 
-function startHero() {
-  initMatrix();
-  initTyping();
-  initScramble();
-  initCounters();
-}
-
-// ─── MATRIX RAIN ───
+// ─── MATRIX RAIN (muito sutil) ───
 function initMatrix() {
   const canvas = document.getElementById('matrix');
-  const ctx = canvas.getContext('2d');
+  const ctx    = canvas.getContext('2d');
   let W, H, cols, drops;
-
-  const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ01アBCDEFGHIJKL0110';
+  const chars = 'アイウエオ01アBCDEF0110GHIJKL';
 
   function resize() {
     W = canvas.width  = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
-    cols  = Math.floor(W / 18);
+    cols  = Math.floor(W / 20);
     drops = Array(cols).fill(1);
   }
-
   resize();
   window.addEventListener('resize', resize);
 
-  function draw() {
-    ctx.fillStyle = 'rgba(8,8,8,0.05)';
+  setInterval(() => {
+    ctx.fillStyle = 'rgba(19,19,31,0.06)';
     ctx.fillRect(0, 0, W, H);
-    ctx.font = '14px Share Tech Mono';
-
+    ctx.font = '13px Share Tech Mono';
     drops.forEach((y, i) => {
       const ch = chars[Math.floor(Math.random() * chars.length)];
-      const bright = Math.random() > 0.97;
-      const colors = ['#716C59','#AEA897','#6F5F48'];
-      ctx.fillStyle = bright ? '#C8C5BE' : colors[Math.floor(Math.random() * colors.length)];
-      ctx.globalAlpha = bright ? 0.7 : 0.3;
-      ctx.fillText(ch, i * 18, y * 18);
+      ctx.fillStyle = '#A5A8AF';
+      ctx.globalAlpha = Math.random() * 0.2 + 0.05;
+      ctx.fillText(ch, i * 20, y * 20);
       ctx.globalAlpha = 1;
-      if (y * 18 > H && Math.random() > 0.975) drops[i] = 0;
+      if (y * 20 > H && Math.random() > 0.975) drops[i] = 0;
       drops[i]++;
     });
-  }
-
-  setInterval(draw, 55);
+  }, 70);
 }
 
-// ─── TYPING EFFECT ───
+// ─── TYPING ───
 function initTyping() {
   const el = document.getElementById('typed-text');
   if (!el) return;
-
   const phrases = [
     'desenvolvendo soluções reais',
     'apaixonado por front-end',
@@ -97,77 +86,33 @@ function initTyping() {
     'disponível para oportunidades',
   ];
   let pi = 0, ci = 0, deleting = false;
-
   function tick() {
     const phrase = phrases[pi];
     if (deleting) {
       ci--;
       el.textContent = phrase.slice(0, ci);
-      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 400); return; }
-      setTimeout(tick, 45);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 500); return; }
+      setTimeout(tick, 40);
     } else {
       ci++;
       el.textContent = phrase.slice(0, ci);
-      if (ci === phrase.length) { deleting = true; setTimeout(tick, 1800); return; }
-      setTimeout(tick, 80);
+      if (ci === phrase.length) { deleting = true; setTimeout(tick, 2000); return; }
+      setTimeout(tick, 85);
     }
   }
-
-  setTimeout(tick, 500);
+  setTimeout(tick, 400);
 }
 
-// ─── SCRAMBLE EFFECT ───
-function initScramble() {
-  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%';
-
-  document.querySelectorAll('.scramble').forEach(el => {
-    const target = el.getAttribute('data-text').toUpperCase();
-    let frame = 0;
-    let running = false;
-
-    function scramble() {
-      if (running) return;
-      running = true;
-      frame = 0;
-      const total = target.length * 3;
-
-      const interval = setInterval(() => {
-        let out = '';
-        for (let i = 0; i < target.length; i++) {
-          if (frame > i * 3) {
-            out += target[i];
-          } else {
-            out += CHARS[Math.floor(Math.random() * CHARS.length)];
-          }
-        }
-        el.childNodes[0]
-          ? (el.firstChild.nodeType === 3
-              ? (el.firstChild.textContent = out)
-              : (el.textContent = out))
-          : (el.textContent = out);
-        frame++;
-        if (frame > total) { clearInterval(interval); el.textContent = target; running = false; }
-      }, 40);
-    }
-
-    el.addEventListener('mouseenter', scramble);
-    setTimeout(scramble, Math.random() * 800 + 200);
-  });
-}
-
-// ─── COUNTER ANIMATION ───
+// ─── COUNTERS ───
 function initCounters() {
   document.querySelectorAll('.counter').forEach(el => {
     const target = parseInt(el.getAttribute('data-target'));
-    const suffix = el.querySelector('span') ? el.querySelector('span').outerHTML : '';
     let current = 0;
-    const step = Math.ceil(target / 30);
-
     const interval = setInterval(() => {
-      current = Math.min(current + step, target);
-      el.innerHTML = current + suffix;
+      current = Math.min(current + 1, target);
+      el.textContent = current;
       if (current >= target) clearInterval(interval);
-    }, 50);
+    }, 80);
   });
 }
 
@@ -181,10 +126,9 @@ document.addEventListener('mousemove', e => {
   cursor.style.left = mx + 'px';
   cursor.style.top  = my + 'px';
 });
-
 function animRing() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
+  rx += (mx - rx) * 0.1;
+  ry += (my - ry) * 0.1;
   ring.style.left = rx + 'px';
   ring.style.top  = ry + 'px';
   requestAnimationFrame(animRing);
@@ -193,99 +137,79 @@ animRing();
 
 document.querySelectorAll('a, button').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    cursor.style.width  = '20px'; cursor.style.height = '20px';
-    ring.style.width    = '56px'; ring.style.height   = '56px';
-    ring.style.opacity  = '1';
+    cursor.style.width = '18px'; cursor.style.height = '18px';
+    ring.style.width   = '50px'; ring.style.height   = '50px';
+    ring.style.opacity = '0.8';
   });
   el.addEventListener('mouseleave', () => {
-    cursor.style.width  = '12px'; cursor.style.height = '12px';
-    ring.style.width    = '36px'; ring.style.height   = '36px';
-    ring.style.opacity  = '0.6';
+    cursor.style.width = '7px';  cursor.style.height = '7px';
+    ring.style.width   = '28px'; ring.style.height   = '28px';
+    ring.style.opacity = '0.5';
   });
 });
 
 // ─── CURSOR TRAIL ───
 const trailCanvas = document.getElementById('cursorTrail');
 const tCtx = trailCanvas.getContext('2d');
-trailCanvas.width  = window.innerWidth;
-trailCanvas.height = window.innerHeight;
-window.addEventListener('resize', () => {
+function resizeTrail() {
   trailCanvas.width  = window.innerWidth;
   trailCanvas.height = window.innerHeight;
-});
+}
+resizeTrail();
+window.addEventListener('resize', resizeTrail);
 
 const particles = [];
 document.addEventListener('mousemove', e => {
-  for (let i = 0; i < 2; i++) {
-    particles.push({
-      x: e.clientX, y: e.clientY,
-      vx: (Math.random() - 0.5) * 2,
-      vy: (Math.random() - 0.5) * 2,
-      life: 1,
-      size: Math.random() * 3 + 1,
-    });
-  }
+  if (Math.random() > 0.4) return;
+  particles.push({
+    x: e.clientX, y: e.clientY,
+    vx: (Math.random() - 0.5) * 1.5,
+    vy: (Math.random() - 0.5) * 1.5,
+    life: 1, size: Math.random() * 2 + 0.5,
+  });
 });
-
 function drawTrail() {
   tCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i];
-    p.x += p.vx; p.y += p.vy;
-    p.life -= 0.04;
+    p.x += p.vx; p.y += p.vy; p.life -= 0.05;
     if (p.life <= 0) { particles.splice(i, 1); continue; }
     tCtx.beginPath();
     tCtx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-    const trailColors = ['174,168,151','113,108,89','111,95,72'];
-    const tc = trailColors[Math.floor(Math.random() * trailColors.length)];
-    tCtx.fillStyle = `rgba(${tc},${p.life * 0.5})`;
+    tCtx.fillStyle = `rgba(165,168,175,${p.life * 0.35})`;
     tCtx.fill();
   }
   requestAnimationFrame(drawTrail);
 }
 drawTrail();
 
-// ─── FADE IN + STAGGER + SKILL BARS ───
+// ─── FADE IN + SKILL BARS ───
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add('visible');
-
-    // animate skill bars inside
     e.target.querySelectorAll('.skill-bar').forEach((bar, i) => {
       const level = bar.getAttribute('data-level');
-      setTimeout(() => {
-        bar.querySelector('.skill-fill').style.width = level + '%';
-      }, i * 100);
+      setTimeout(() => { bar.querySelector('.skill-fill').style.width = level + '%'; }, i * 80);
     });
-
     observer.unobserve(e.target);
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 
-document.querySelectorAll('.fade-in, .stagger-children').forEach(el => observer.observe(el));
-
-// also observe stack-bars separately
-document.querySelectorAll('.stack-bars').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-in, .stack-bars').forEach(el => observer.observe(el));
 
 // ─── ACTIVE NAV ───
 const sections = document.querySelectorAll('section[id]');
 const navLinks  = document.querySelectorAll('.nav-links a');
-
 window.addEventListener('scroll', () => {
   let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
-  });
-  navLinks.forEach(a => {
-    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--red)' : '';
-  });
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+  navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : ''; });
 });
 
 // ─── MOBILE MENU ───
 const hamburger = document.getElementById('hamburger');
 const navMobile  = document.getElementById('navMobile');
-
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('open');
   navMobile.classList.toggle('open');
@@ -305,10 +229,10 @@ let termOpen = false;
 
 const termCommands = {
   help: `<span class="t-highlight">Comandos disponíveis:</span>
-whoami    — exibe informações sobre mim
-skills    — lista minhas habilidades
-projetos  — lista meus projetos
-contato   — formas de me contatar
+whoami    — informações sobre mim
+skills    — habilidades técnicas
+projetos  — lista de projetos
+contato   — formas de contato
 github    — abre meu GitHub
 clear     — limpa o terminal
 exit      — fecha o terminal`,
@@ -323,10 +247,7 @@ HTML5 ████████░░ 90%
 CSS3  ████████░░ 85%
 JS    ███████░░░ 75%
 React ██████░░░░ 65%
-Git   ████████░░ 80%
-
-<span class="t-highlight">[ SOFT SKILLS ]</span>
-Proatividade · Comunicação · Trabalho em equipe`,
+Git   ████████░░ 80%`,
 
   projetos: `<span class="t-highlight">[ PROJETOS ]</span>
 01 · FinançasBot WhatsApp   <span class="t-green">✓ concluído</span>
@@ -340,9 +261,8 @@ Proatividade · Comunicação · Trabalho em equipe`,
 🐙 github.com/Joaovs40`,
 
   github: `<span class="t-green">Abrindo GitHub...</span>`,
-
-  clear: '__clear__',
-  exit:  '__exit__',
+  clear:  '__clear__',
+  exit:   '__exit__',
 };
 
 function termPrint(html) {
@@ -352,7 +272,6 @@ function termPrint(html) {
   termBody.appendChild(line);
   termBody.scrollTop = termBody.scrollHeight;
 }
-
 function termPrintCmd(cmd) {
   const line = document.createElement('div');
   line.className = 't-line t-cmd';
@@ -364,20 +283,16 @@ function openTerminal() {
   if (termOpen) return;
   termOpen = true;
   termOverlay.classList.add('open');
-  termPrint('<span class="t-green">jsales-os v2.0 — Terminal interativo</span>\nDigite <span class="t-highlight">help</span> para ver os comandos disponíveis.');
+  termPrint('<span class="t-green">jsales-os v2.0 — Terminal interativo</span>\nDigite <span class="t-highlight">help</span> para ver os comandos.');
   setTimeout(() => termInput.focus(), 100);
 }
-
 function closeTerminal() {
   termOpen = false;
   termOverlay.classList.remove('open');
 }
 
 document.addEventListener('keydown', e => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-    e.preventDefault();
-    termOpen ? closeTerminal() : openTerminal();
-  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); termOpen ? closeTerminal() : openTerminal(); }
   if (e.key === 'Escape' && termOpen) closeTerminal();
 });
 
@@ -386,32 +301,19 @@ termInput.addEventListener('keydown', e => {
   const cmd = termInput.value.trim().toLowerCase();
   termInput.value = '';
   if (!cmd) return;
-
   termPrintCmd(cmd);
-
   if (cmd in termCommands) {
     const result = termCommands[cmd];
-    if (result === '__clear__') {
-      termBody.innerHTML = '';
-    } else if (result === '__exit__') {
-      closeTerminal();
-    } else {
-      if (cmd === 'github') {
-        termPrint(result);
-        setTimeout(() => window.open('https://github.com/Joaovs40', '_blank'), 600);
-      } else {
-        termPrint(result);
-      }
+    if (result === '__clear__') termBody.innerHTML = '';
+    else if (result === '__exit__') closeTerminal();
+    else {
+      termPrint(result);
+      if (cmd === 'github') setTimeout(() => window.open('https://github.com/Joaovs40', '_blank'), 500);
     }
   } else {
-    termPrint(`<span class="t-red">Comando não encontrado: ${cmd}</span>\nDigite <span class="t-highlight">help</span> para ver os comandos.`);
+    termPrint(`<span class="t-red">Comando não encontrado: ${cmd}</span>\nDigite <span class="t-highlight">help</span>.`);
   }
 });
 
-// close on overlay click
-termOverlay.addEventListener('click', e => {
-  if (e.target === termOverlay) closeTerminal();
-});
-
-// close button
+termOverlay.addEventListener('click', e => { if (e.target === termOverlay) closeTerminal(); });
 document.querySelector('.term-close').addEventListener('click', closeTerminal);
