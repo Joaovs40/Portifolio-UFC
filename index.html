@@ -9,11 +9,41 @@
 </head>
 <body>
 
+<!-- BOOT SCREEN -->
+<div id="boot-screen">
+  <div class="boot-inner">
+    <div class="boot-logo">J<span>.</span>SALES<span class="boot-ver">v2.0</span></div>
+    <div class="boot-lines" id="bootLines"></div>
+    <div class="boot-bar-wrap">
+      <div class="boot-bar" id="bootBar"></div>
+    </div>
+    <div class="boot-status" id="bootStatus">Inicializando sistema...</div>
+  </div>
+</div>
+
+<!-- TERMINAL OVERLAY -->
+<div id="terminal-overlay" class="terminal-overlay">
+  <div class="terminal-window">
+    <div class="terminal-titlebar">
+      <span class="term-btn term-close"></span>
+      <span class="term-btn term-min"></span>
+      <span class="term-btn term-max"></span>
+      <span class="term-title">jsales@portfolio:~</span>
+    </div>
+    <div class="terminal-body" id="termBody"></div>
+    <div class="terminal-input-row">
+      <span class="term-prompt">jsales@portfolio:~$ </span>
+      <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" />
+    </div>
+  </div>
+</div>
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+<canvas id="cursorTrail" class="cursor-trail-canvas"></canvas>
 
 <!-- NAV -->
-<nav>
+<nav id="mainNav">
   <div class="nav-logo">J<span>.</span>SALES</div>
   <div class="nav-links">
     <a href="#sobre">Sobre</a>
@@ -22,40 +52,57 @@
     <a href="#projetos">Projetos</a>
     <a href="#contato">Contato</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#sobre" class="nav-mobile-link">Sobre</a>
+  <a href="#experiencia" class="nav-mobile-link">Experiência</a>
+  <a href="#stack" class="nav-mobile-link">Stack</a>
+  <a href="#projetos" class="nav-mobile-link">Projetos</a>
+  <a href="#contato" class="nav-mobile-link">Contato</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
+  <canvas id="matrix" class="matrix-canvas"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-lines"></div>
   <div class="hero-number">01</div>
 
   <div class="hero-content">
-    <div class="hero-tag">Disponível para oportunidades</div>
-    <h1 class="hero-name">
-      <span class="line1">João</span>
-      <span class="line2 glitch" data-text="Pedro">Pedro</span>
-      <span class="line3">Sales</span>
-    </h1>
-      <p class="hero-role">
-        <span>Estagiário TI</span>
-        <span>Analista Suporte Jr.</span>
-        <span>Front-end Dev</span>
-      </p>
-      <div class="hero-cta">
-        <a href="#projetos" class="btn-primary">Ver Projetos</a>
-        <a href="#contato" class="btn-outline">Entre em Contato</a>
-      </div>
+    <div class="hero-tag">
+      <span class="status-dot"></span>
+      Disponível para oportunidades
     </div>
+    <h1 class="hero-name">
+      <span class="line1 scramble" data-text="João">João</span>
+      <span class="line2 glitch scramble" data-text="Pedro">Pedro</span>
+      <span class="line3 scramble" data-text="Sales">Sales</span>
+    </h1>
+    <div class="hero-terminal">
+      <span class="terminal-prompt">$ </span><span id="typed-text"></span><span class="terminal-cursor">_</span>
+    </div>
+    <p class="hero-role">
+      <span>Estagiário TI</span>
+      <span>Analista Suporte Jr.</span>
+      <span>Front-end Dev</span>
+    </p>
+    <div class="hero-cta stagger-children">
+      <a href="#projetos" class="btn-primary">Ver Projetos</a>
+      <a href="#contato" class="btn-outline">Entre em Contato</a>
+    </div>
+  </div>
 
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-num">7<span>+</span></div>
+      <div class="stat-num counter" data-target="7">0<span>+</span></div>
       <div class="stat-label">Anos de Experiência no mercado de trabalho</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat">
-      <div class="stat-num">5<span>+</span></div>
+      <div class="stat-num counter" data-target="5">0<span>+</span></div>
       <div class="stat-label">Certificações Alura</div>
     </div>
     <div class="stat-divider"></div>
@@ -73,6 +120,11 @@
   <div class="scroll-ind">
     <div class="scroll-line"></div>
     <span>Scroll</span>
+  </div>
+
+  <div class="hero-hint">
+    <span class="hint-key">CTRL+K</span>
+    <span class="hint-label">abrir terminal</span>
   </div>
 </section>
 
@@ -158,6 +210,40 @@
     <h2 class="section-title">Tech Stack</h2>
     <div class="section-line"></div>
   </div>
+  <div class="stack-bars fade-in">
+    <div class="skill-bar" data-level="90">
+      <div class="skill-info"><span class="skill-name">HTML5</span><span class="skill-pct">90%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-bar" data-level="85">
+      <div class="skill-info"><span class="skill-name">CSS3</span><span class="skill-pct">85%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-bar" data-level="75">
+      <div class="skill-info"><span class="skill-name">JavaScript</span><span class="skill-pct">75%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-bar" data-level="65">
+      <div class="skill-info"><span class="skill-name">React</span><span class="skill-pct">65%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-bar" data-level="80">
+      <div class="skill-info"><span class="skill-name">Git / GitHub</span><span class="skill-pct">80%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-bar" data-level="70">
+      <div class="skill-info"><span class="skill-name">Node.js</span><span class="skill-pct">70%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-bar" data-level="60">
+      <div class="skill-info"><span class="skill-name">IA Generativa</span><span class="skill-pct">60%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+    <div class="skill-bar" data-level="75">
+      <div class="skill-info"><span class="skill-name">SAP / ERP</span><span class="skill-pct">75%</span></div>
+      <div class="skill-track"><div class="skill-fill"></div></div>
+    </div>
+  </div>
   <div class="stack-grid fade-in">
     <div class="stack-card"><div class="stack-icon">🌐</div><div class="stack-name">HTML5</div></div>
     <div class="stack-card"><div class="stack-icon">🎨</div><div class="stack-name">CSS3</div></div>
@@ -205,12 +291,16 @@
       </div>
       <a href="https://github.com/Joaovs40" target="_blank" class="project-link">Ver no GitHub</a>
     </div>
-    <div class="project-card fade-in">
+    <div class="project-card fade-in project-card--active">
       <div class="project-num">03</div>
-      <div class="project-title">Próximo Projeto</div>
-      <div class="project-desc">Em construção. Sempre desenvolvendo algo novo. Confira meu GitHub para atualizações em tempo real dos meus projetos.</div>
+      <div class="project-badge">Em Desenvolvimento</div>
+      <div class="project-title">Sistema RafaelMuller</div>
+      <div class="project-desc">Sistema web completo desenvolvido em parceria. Plataforma com painel administrativo, gestão de dados e interface moderna — construído com foco em usabilidade e escalabilidade.</div>
       <div class="project-tags">
-        <span class="tag">Em breve</span>
+        <span class="tag">React</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Em progresso</span>
       </div>
       <a href="https://github.com/Joaovs40" target="_blank" class="project-link">Acompanhar no GitHub</a>
     </div>
