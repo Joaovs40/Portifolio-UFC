@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>João Sales — Dev</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <title>Portfólio | João Sales — Desenvolvedor Front-End</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
 <!-- BOOT SCREEN -->
 <div id="boot-screen">
   <div class="boot-inner">
-    <div class="boot-logo">J<span>.</span>SALES <span class="boot-ver">v2.0</span></div>
+    <div class="boot-logo">J<span>.</span>SALES</div>
     <div class="boot-lines" id="bootLines"></div>
     <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
     <div class="boot-status" id="bootStatus">Inicializando...</div>
@@ -23,7 +23,7 @@
 <div id="terminal-overlay" class="terminal-overlay">
   <div class="terminal-window">
     <div class="terminal-titlebar">
-      <span class="term-btn term-close"></span>
+      <span class="term-btn term-close" id="termClose"></span>
       <span class="term-btn term-min"></span>
       <span class="term-btn term-max"></span>
       <span class="term-title">jsales@portfolio:~</span>
@@ -38,223 +38,229 @@
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-<canvas id="cursorTrail" class="cursor-trail-canvas"></canvas>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <div class="nav-logo">J<span>.</span>SALES</div>
-  <div class="nav-links">
-    <a href="#sobre">Sobre</a>
-    <a href="#experiencia">Experiência</a>
-    <a href="#stack">Stack</a>
-    <a href="#projetos">Projetos</a>
-    <a href="#contato">Contato</a>
+<!-- HEADER (sticky, igual rhuanbello) -->
+<header id="mainHeader">
+  <div class="container">
+    <div class="logo">J<span>.</span>SALES</div>
+    <nav class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#skills">Habilidades</a>
+      <a href="#projects">Projetos</a>
+      <a href="#contato">Contato</a>
+      <button class="term-hint" id="termBtn" title="Abrir terminal (Ctrl+K)">CTRL+K</button>
+    </nav>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+</header>
+
+<!-- MOBILE NAV -->
 <div class="nav-mobile" id="navMobile">
-  <a href="#sobre" class="nav-mobile-link">Sobre</a>
-  <a href="#experiencia" class="nav-mobile-link">Experiência</a>
-  <a href="#stack" class="nav-mobile-link">Stack</a>
-  <a href="#projetos" class="nav-mobile-link">Projetos</a>
-  <a href="#contato" class="nav-mobile-link">Contato</a>
+  <a href="#sobre">Sobre</a>
+  <a href="#skills">Habilidades</a>
+  <a href="#projects">Projetos</a>
+  <a href="#contato">Contato</a>
 </div>
 
-<!-- HERO -->
-<section id="hero">
-  <canvas id="matrix" class="matrix-canvas"></canvas>
+<!-- SOBRE (hero igual rhuanbello: banner 2 col + about abaixo) -->
+<section id="sobre" class="js-section">
+  <div class="container">
 
-  <div class="hero-content">
-    <p class="hero-greeting">Olá, eu sou o</p>
-    <h1 class="hero-name">
-      João<br>
-      <span class="name-accent">Pedro</span><br>
-      Sales
-    </h1>
-    <div class="hero-terminal">
-      <span class="terminal-prompt">$ </span><span id="typed-text"></span><span class="terminal-cursor">_</span>
-    </div>
-    <p class="hero-role">
-      Estagiário TI &nbsp;·&nbsp; Analista Suporte Jr. &nbsp;·&nbsp; Front-end Dev
-    </p>
-    <div class="hero-cta">
-      <a href="#projetos" class="btn-primary">Ver Projetos</a>
-      <a href="#contato" class="btn-ghost">Entrar em contato</a>
-    </div>
-    <div class="hero-hint">
-      <span class="hint-key">CTRL+K</span> terminal
-    </div>
-  </div>
-
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num counter" data-target="7">0</div>
-      <div class="stat-label">Anos de experiência</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num counter" data-target="5">0</div>
-      <div class="stat-label">Certificações Alura</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">ADS</div>
-      <div class="stat-label">Em formação · Claretiano</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">SP</div>
-      <div class="stat-label">Rio Claro · Brasil</div>
-    </div>
-  </div>
-</section>
-
-<!-- SOBRE -->
-<section id="sobre">
-  <div class="section-label fade-in">// Sobre mim</div>
-  <div class="sobre-grid">
-    <div class="sobre-text fade-in">
-      <h2 class="section-title">Desenvolvedor em formação,<br><span>sempre evoluindo.</span></h2>
-      <p>Sou <strong>João Pedro Vasques de Sales</strong>, estudante de Análise e Desenvolvimento de Sistemas no Claretiano, com sólida experiência em processos produtivos e administrativos.</p>
-      <p>Profissional pontual, proativo e com grande facilidade de adaptação a novos desafios tecnológicos. Busco minha primeira oportunidade na área de TI para aplicar conhecimentos em lógica e suporte.</p>
-      <p>Experiência com sistemas ERP (SAP), lógica de programação, manutenção de hardware/software e desenvolvimento Front-end com HTML5, CSS3 e JavaScript.</p>
-    </div>
-    <div class="sobre-cards fade-in">
-      <div class="info-card">
-        <div class="info-card-label">Competências Técnicas</div>
-        <ul>
-          <li>HTML5, CSS3 e JavaScript</li>
-          <li>React e componentes reutilizáveis</li>
-          <li>Git / GitHub</li>
-          <li>Sistemas ERP (SAP)</li>
-          <li>APIs e IA Generativa</li>
-        </ul>
+    <!-- BANNER: intro esquerda + profile direita -->
+    <div class="banner">
+      <div class="intro">
+        <div class="title">
+          <h1>Olá, eu sou o</h1>
+          <span class="hero-name">João Sales</span>
+          <p class="hero-role">
+            <span id="typed-text"></span><span class="typed-cursor">|</span>
+          </p>
+        </div>
+        <div class="actions">
+          <a href="#projects" class="btn-primary">Ver Projetos</a>
+          <a href="#contato" class="btn-secondary">Entrar em contato</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat">
+            <strong class="counter" data-target="7">0</strong>
+            <span>anos de experiência</span>
+          </div>
+          <div class="hstat">
+            <strong class="counter" data-target="5">0</strong>
+            <span>certificações Alura</span>
+          </div>
+          <div class="hstat">
+            <strong>ADS</strong>
+            <span>Claretiano</span>
+          </div>
+        </div>
       </div>
-      <div class="info-card">
-        <div class="info-card-label">Soft Skills</div>
-        <ul>
-          <li>Comunicação clara</li>
-          <li>Proatividade e autodidatismo</li>
-          <li>Resolução de problemas</li>
-          <li>Adaptação rápida</li>
-          <li>Trabalho em equipe</li>
-        </ul>
+
+      <!-- PROFILE: avatar com iniciais -->
+      <div class="profile">
+        <div class="avatar-wrap">
+          <div class="avatar">
+            <span class="avatar-initials">JS</span>
+            <div class="avatar-ring"></div>
+          </div>
+          <div class="avatar-badge">
+            <span class="status-dot"></span>
+            Disponível
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- ABOUT: texto bio abaixo do banner -->
+    <div class="about">
+      <h2>Sobre mim</h2>
+      <p>
+        Desenvolvedor Front-End em formação, estudante de Análise e Desenvolvimento de Sistemas no Claretiano.
+        Com sólida experiência em processos produtivos e administrativos, busco minha primeira oportunidade
+        na área de TI para aplicar conhecimentos em lógica, suporte e desenvolvimento web.
+        Experiência com ERP (SAP), lógica de programação e desenvolvimento com HTML5, CSS3 e JavaScript.
+      </p>
+    </div>
+
   </div>
 </section>
 
-<!-- EXPERIÊNCIA -->
-<section id="experiencia">
-  <div class="section-label fade-in">// Experiência</div>
-  <div class="timeline">
-    <div class="timeline-item fade-in">
-      <div class="tl-period">Dez 2021 — Ago 2025</div>
-      <div class="tl-role">Operador de Produção</div>
-      <div class="tl-company">Owens Corning Fiberglas</div>
-      <ul class="tl-desc">
-        <li>Diagnóstico e resolução de problemas técnicos em máquinas automatizadas</li>
-        <li>Aplicação de TPM para máxima eficiência operacional</li>
-        <li>Garantia de disponibilidade tecnológica dos equipamentos</li>
-      </ul>
+<!-- HABILIDADES -->
+<section id="skills" class="js-section">
+  <div class="skills">
+    <div class="container">
+      <h2>Habilidades</h2>
+      <div class="skills-grid">
+        <div class="skill-item"><span class="sk-icon">🌐</span><span>HTML5</span></div>
+        <div class="skill-item"><span class="sk-icon">🎨</span><span>CSS3</span></div>
+        <div class="skill-item"><span class="sk-icon">⚡</span><span>JavaScript</span></div>
+        <div class="skill-item"><span class="sk-icon">⚛️</span><span>React</span></div>
+        <div class="skill-item"><span class="sk-icon">🔧</span><span>Git</span></div>
+        <div class="skill-item"><span class="sk-icon">🐙</span><span>GitHub</span></div>
+        <div class="skill-item"><span class="sk-icon">📦</span><span>Vite</span></div>
+        <div class="skill-item"><span class="sk-icon">🟩</span><span>Node.js</span></div>
+        <div class="skill-item"><span class="sk-icon">🤖</span><span>IA Generativa</span></div>
+        <div class="skill-item"><span class="sk-icon">💼</span><span>SAP / ERP</span></div>
+        <div class="skill-item"><span class="sk-icon">📱</span><span>Responsivo</span></div>
+        <div class="skill-item"><span class="sk-icon">♿</span><span>A11y</span></div>
+      </div>
     </div>
-    <div class="timeline-item fade-in">
-      <div class="tl-period">Nov 2017 — Nov 2021</div>
-      <div class="tl-role">Menor Aprendiz</div>
-      <div class="tl-company">RICLAN S/A · Administração e Comercial</div>
-      <ul class="tl-desc">
-        <li>ERP para emissão de Notas Fiscais e gestão administrativa</li>
-        <li>Controle de banco de dados para reposição de estoques</li>
-        <li>Interface direta com público e equipes internas</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- STACK -->
-<section id="stack">
-  <div class="section-label fade-in">// Habilidades</div>
-  <div class="stack-bars fade-in">
-    <div class="skill-bar" data-level="90"><div class="skill-info"><span class="skill-name">HTML5</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-    <div class="skill-bar" data-level="85"><div class="skill-info"><span class="skill-name">CSS3</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-    <div class="skill-bar" data-level="75"><div class="skill-info"><span class="skill-name">JavaScript</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-    <div class="skill-bar" data-level="65"><div class="skill-info"><span class="skill-name">React</span><span class="skill-pct">65%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-    <div class="skill-bar" data-level="80"><div class="skill-info"><span class="skill-name">Git / GitHub</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-    <div class="skill-bar" data-level="70"><div class="skill-info"><span class="skill-name">Node.js</span><span class="skill-pct">70%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-    <div class="skill-bar" data-level="60"><div class="skill-info"><span class="skill-name">IA Generativa</span><span class="skill-pct">60%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-    <div class="skill-bar" data-level="75"><div class="skill-info"><span class="skill-name">SAP / ERP</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-fill"></div></div></div>
-  </div>
-  <div class="stack-tags fade-in">
-    <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>React</span>
-    <span>Git</span><span>GitHub</span><span>Vite</span><span>Node.js</span>
-    <span>IA Generativa</span><span>SAP / ERP</span><span>Responsivo</span><span>A11y</span>
   </div>
 </section>
 
 <!-- PROJETOS -->
-<section id="projetos">
-  <div class="section-label fade-in">// Projetos</div>
-  <div class="projects-grid">
-    <div class="project-card fade-in">
-      <div class="project-num">01</div>
-      <h3 class="project-title">FinançasBot WhatsApp</h3>
-      <p class="project-desc">Organizador financeiro pessoal via WhatsApp com IA. Registre gastos e receitas em linguagem natural, com relatórios automáticos do mês.</p>
-      <div class="project-tags"><span>Node.js</span><span>Gemini AI</span><span>PostgreSQL</span><span>Baileys</span></div>
-      <a href="https://github.com/Joaovs40" target="_blank" class="project-link">Ver no GitHub →</a>
-    </div>
-    <div class="project-card fade-in">
-      <div class="project-num">02</div>
-      <h3 class="project-title">Portfólio Pessoal</h3>
-      <p class="project-desc">Portfólio com design futurista. Desenvolvido com HTML5, CSS3 puro e JavaScript vanilla com animações, efeitos e terminal interativo.</p>
-      <div class="project-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
-      <a href="https://github.com/Joaovs40" target="_blank" class="project-link">Ver no GitHub →</a>
-    </div>
-    <div class="project-card fade-in project-card--wip">
-      <div class="project-num">03</div>
-      <div class="project-badge">Em desenvolvimento</div>
-      <h3 class="project-title">Sistema RafaelMuller</h3>
-      <p class="project-desc">Sistema web completo desenvolvido em parceria. Plataforma com painel administrativo, gestão de dados e interface moderna focada em usabilidade.</p>
-      <div class="project-tags"><span>React</span><span>Node.js</span><span>PostgreSQL</span></div>
-      <a href="https://github.com/Joaovs40" target="_blank" class="project-link">Acompanhar →</a>
+<section id="projects" class="js-section">
+  <div class="container">
+    <h2>Projetos</h2>
+
+    <div class="highlights">
+      <h3>Destaques</h3>
+      <div class="cards-projects">
+
+        <!-- Card 1 -->
+        <div class="box">
+          <div class="cover cover-1">
+            <div class="details">
+              <p>FinançasBot WhatsApp</p>
+              <div class="mini-langs">
+                <span>Node.js</span>
+                <span>Gemini AI</span>
+                <span>PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+          <div class="description">
+            <p>Organizador financeiro via WhatsApp com IA. Registre gastos em linguagem natural com relatórios automáticos.</p>
+            <a href="https://github.com/Joaovs40" target="_blank">Ver mais</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="box">
+          <div class="cover cover-2">
+            <div class="details">
+              <p>Portfólio Pessoal</p>
+              <div class="mini-langs">
+                <span>HTML5</span>
+                <span>CSS3</span>
+                <span>JavaScript</span>
+              </div>
+            </div>
+          </div>
+          <div class="description">
+            <p>Portfólio com design futurista, animações, terminal interativo e efeitos visuais em JavaScript puro.</p>
+            <a href="https://github.com/Joaovs40" target="_blank">Ver mais</a>
+          </div>
+        </div>
+
+        <!-- Card 3 (WIP) -->
+        <div class="box box-wip">
+          <div class="cover cover-3">
+            <div class="wip-badge">Em desenvolvimento</div>
+            <div class="details">
+              <p>Sistema RafaelMuller</p>
+              <div class="mini-langs">
+                <span>React</span>
+                <span>Node.js</span>
+                <span>PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+          <div class="description">
+            <p>Sistema web completo com painel administrativo e gestão de dados, desenvolvido em parceria.</p>
+            <a href="https://github.com/Joaovs40" target="_blank">Acompanhar</a>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
 
 <!-- CONTATO -->
-<section id="contato">
-  <div class="section-label fade-in">// Contato</div>
-  <div class="contato-inner">
-    <div class="fade-in">
-      <h2 class="contato-title">Vamos trabalhar<br><span>juntos.</span></h2>
-      <p class="contato-sub">Aberto a estágios, freelas e oportunidades em TI.</p>
-    </div>
-    <div class="contato-links fade-in">
-      <a href="tel:+5519993229350" class="contato-link">
-        <span class="contato-link-label">Telefone</span>
-        <span class="contato-link-value">(19) 99322-9350</span>
-        <span class="contato-link-arrow">→</span>
+<section id="contato" class="js-section">
+  <div class="container">
+    <h2>Contatos</h2>
+    <div class="contacts-grid">
+      <a href="mailto:joaovs40.jp@gmail.com" class="contact-item">
+        <span class="ci-icon">✉</span>
+        <div class="ci-info">
+          <span class="ci-label">E-mail</span>
+          <span class="ci-value">joaovs40.jp@gmail.com</span>
+        </div>
       </a>
-      <a href="mailto:joaovs40.jp@gmail.com" class="contato-link">
-        <span class="contato-link-label">E-mail</span>
-        <span class="contato-link-value">joaovs40.jp@gmail.com</span>
-        <span class="contato-link-arrow">→</span>
+      <a href="tel:+5519993229350" class="contact-item">
+        <span class="ci-icon">☎</span>
+        <div class="ci-info">
+          <span class="ci-label">Telefone</span>
+          <span class="ci-value">(19) 99322-9350</span>
+        </div>
       </a>
-      <a href="https://linkedin.com/in/joaosalesdev" target="_blank" class="contato-link">
-        <span class="contato-link-label">LinkedIn</span>
-        <span class="contato-link-value">joaosalesdev</span>
-        <span class="contato-link-arrow">→</span>
+      <a href="https://linkedin.com/in/joaosalesdev" target="_blank" class="contact-item">
+        <span class="ci-icon">in</span>
+        <div class="ci-info">
+          <span class="ci-label">LinkedIn</span>
+          <span class="ci-value">joaosalesdev</span>
+        </div>
       </a>
-      <a href="https://github.com/Joaovs40" target="_blank" class="contato-link">
-        <span class="contato-link-label">GitHub</span>
-        <span class="contato-link-value">Joaovs40</span>
-        <span class="contato-link-arrow">→</span>
+      <a href="https://github.com/Joaovs40" target="_blank" class="contact-item">
+        <span class="ci-icon">gh</span>
+        <div class="ci-info">
+          <span class="ci-label">GitHub</span>
+          <span class="ci-value">Joaovs40</span>
+        </div>
       </a>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 João Pedro Vasques de Sales</p>
-  <p>Rio Claro · SP · Brasil</p>
+  <div class="container">
+    <p>© 2026 João Pedro Vasques de Sales · Rio Claro, SP</p>
+    <p>Desenvolvido com HTML · CSS · JS</p>
+  </div>
 </footer>
 
 <script src="script.js"></script>
